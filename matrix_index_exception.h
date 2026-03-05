@@ -1,10 +1,13 @@
 #ifndef MATRIX_INDEX_EXCEPTION_H
 #define MATRIX_INDEX_EXCEPTION_H
 
-class MatrixIndexException
+#include "matrix_base_exception.h"
+
+class MatrixIndexException : public MatrixBaseException
 {
 public:
-    MatrixIndexException();
+    explicit MatrixIndexException(const std::string &msg);
 };
+
 
 #endif // MATRIX_INDEX_EXCEPTION_H

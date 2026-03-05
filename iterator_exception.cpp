@@ -1,3 +1,6 @@
 #include "iterator_exception.h"
 
-IteratorException::IteratorException() {}
+#include "iterator_exception.h"
+
+IteratorException::IteratorException(const std::string &msg)
+    : MatrixBaseException("Iterator Error: " + msg) {}
