@@ -76,7 +76,7 @@ template<typename T>
 matrix<T>& matrix<T>::operator +=(const matrix<T>& mat) {
     checkSameSize(mat);
     for (size_t i = 0; i < rows * cols; ++i)
-        data[i] += mat[i];
+        data[i] += mat.data[i];
     return *this;
 }
 
@@ -84,7 +84,7 @@ template<typename T>
 matrix<T>& matrix<T>::operator -=(const matrix<T>& mat) {
     checkSameSize(mat);
     for (size_t i = 0; i < rows * cols; ++i)
-        data[i] -= mat[i];
+        data[i] += mat.data[i];
     return *this;
 }
 
@@ -212,12 +212,12 @@ void matrix<T>::checkSameSize(const matrix<T> &other) const
 
 template<typename T>
 Iterator<T> matrix<T>::iteratorBegin() {
-    Iterator<T>(*this, 0);
+    return Iterator<T>(*this, 0);
 }
 
 template<typename T>
 Iterator<T> matrix<T>::iteratorEnd() {
-    Iterator<T>(*this, rows * cols);
+    return Iterator<T>(*this, rows * cols);
 }
 
 #endif // MATRIX_IMPL_H

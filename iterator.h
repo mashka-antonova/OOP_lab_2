@@ -13,7 +13,7 @@ public:
     Iterator(matrix<T>& containerObj, unsigned int startIndex = 0);
     Iterator<T> next();
     T value();
-    bool is_end();
+    bool isEnd();
     Iterator<T>& operator++();
     T& operator *();
     bool operator ==(Iterator<T> &b);

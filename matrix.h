@@ -5,7 +5,6 @@
 #include <iostream>
 #include <utility>
 #include "matrix_base_exception.h"
-#include "matrix_index_exception.h"
 
 template<typename T>
 class Iterator;

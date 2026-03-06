@@ -5,7 +5,7 @@
 
 template<typename T>
 Iterator<T>::Iterator(matrix<T>& containerObj, unsigned int startIndex)
-    : container(containerObj), index(startIndex) {}
+    : container(&containerObj), index(startIndex) {}
 
 template<typename T>
 Iterator<T> Iterator<T>::next() {
@@ -23,8 +23,8 @@ T Iterator<T>::value() {
 }
 
 template<typename T>
-bool Iterator<T>::is_end() {
-    return index >= container->rows * container->columns;
+bool Iterator<T>::isEnd() {
+    return index >= container->rows * container->cols;
 }
 
 template<typename T>
