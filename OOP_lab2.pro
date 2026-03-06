@@ -6,8 +6,7 @@ CONFIG -= qt
 SOURCES += \
         iterator_exception.cpp \
         main.cpp \
-        matrix_base_exception.cpp \
-        matrix_index_exception.cpp
+        matrix_base_exception.cpp
 
 HEADERS += \
     iterator.h \
@@ -15,5 +14,4 @@ HEADERS += \
     iterator_impl.h \
     matrix.h \
     matrix_base_exception.h \
-    matrix_impl.h \
-    matrix_index_exception.h
+    matrix_impl.h
