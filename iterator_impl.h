@@ -1,7 +1,7 @@
 #ifndef ITERATOR_IMPL_H
 #define ITERATOR_IMPL_H
 
-#include <iterator.h>
+#include "iterator.h"
 
 template<typename T>
 Iterator<T>::Iterator(matrix<T>& containerObj, unsigned int startIndex)
@@ -9,7 +9,7 @@ Iterator<T>::Iterator(matrix<T>& containerObj, unsigned int startIndex)
 
 template<typename T>
 Iterator<T> Iterator<T>::next() {
-    if (is_end())
+    if (isEnd())
         throw IteratorException("Iterator is already at end");
     ++index;
     return *this;
@@ -17,7 +17,7 @@ Iterator<T> Iterator<T>::next() {
 
 template<typename T>
 T Iterator<T>::value() {
-    if (is_end())
+    if (isEnd())
         throw IteratorException("Can't read value at end");
     return container->data[index];
 }
@@ -36,7 +36,7 @@ Iterator<T>& Iterator<T>::operator++()
 
 template<typename T>
 T& Iterator<T>::operator *() {
-    if (is_end())
+    if (isEnd())
         throw IteratorException("Can't get value at end");
     return container->data[index];
 }

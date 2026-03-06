@@ -6,7 +6,6 @@
 #include <iostream>
 #include <utility>
 #include "matrix_base_exception.h"
-#include "matrix_index_exception.h"
 
 template <typename T>
 matrix<T>::matrix(unsigned int n, unsigned int m)
@@ -84,7 +83,7 @@ template<typename T>
 matrix<T>& matrix<T>::operator -=(const matrix<T>& mat) {
     checkSameSize(mat);
     for (size_t i = 0; i < rows * cols; ++i)
-        data[i] += mat.data[i];
+        data[i] -= mat.data[i];
     return *this;
 }
 
