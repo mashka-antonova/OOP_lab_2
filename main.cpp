@@ -1,9 +1,7 @@
-#include <iostream>
-
-using namespace std;
+#include "test.h"
 
 int main()
 {
-    cout << "Hello World!" << endl;
-    return 0;
+    MatrixTests tests;
+    return tests.runAll();
 }

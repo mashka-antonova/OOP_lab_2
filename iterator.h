@@ -4,13 +4,13 @@
 #include "iterator_exception.h"
 
 template<typename T>
-class matrix;
+class Matrix;
 
 template<typename T>
 class Iterator
 {
 public:
-    Iterator(matrix<T>& containerObj, unsigned int startIndex = 0);
+    Iterator(Matrix<T>& containerObj, unsigned int startIndex = 0);
     Iterator<T> next();
     T value();
     bool isEnd();
@@ -19,7 +19,7 @@ public:
     bool operator ==(Iterator<T> &b);
     bool operator !=(Iterator<T> &b);
 private:
-    matrix<T>* container;
+    Matrix<T>* container;
     unsigned int index;
 };
 

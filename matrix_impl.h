@@ -8,11 +8,11 @@
 #include "matrix_base_exception.h"
 
 template <typename T>
-matrix<T>::matrix(unsigned int n, unsigned int m)
+Matrix<T>::Matrix(unsigned int n, unsigned int m)
     : rows(n), cols(m), data(new T[n * m]{}) {}
 
 template <typename T>
-matrix<T>::matrix(const matrix<T>& mat)
+Matrix<T>::Matrix(const Matrix<T>& mat)
     : rows(mat.rows), cols(mat.cols), data(new T[rows * cols]{})
 {
     for (size_t i = 0; i < rows * cols; ++i)
@@ -20,7 +20,7 @@ matrix<T>::matrix(const matrix<T>& mat)
 }
 
 template <typename T>
-matrix<T>::matrix(matrix<T>&& mat) noexcept
+Matrix<T>::Matrix(Matrix<T>&& mat) noexcept
     : rows(mat.rows), cols(mat.cols), data(mat.data)
 {
     mat.rows = 0;
@@ -29,7 +29,7 @@ matrix<T>::matrix(matrix<T>&& mat) noexcept
 }
 
 template <typename T>
-matrix<T>::matrix(std::initializer_list<std::initializer_list<T>> list)
+Matrix<T>::Matrix(std::initializer_list<std::initializer_list<T>> list)
     : rows(list.size()), cols(0), data(nullptr)
 {
     if (rows == 0)
@@ -52,13 +52,13 @@ matrix<T>::matrix(std::initializer_list<std::initializer_list<T>> list)
 }
 
 template<typename T>
-matrix<T>::~matrix()
+Matrix<T>::~Matrix()
 {
     delete[] data;
 }
 
 template<typename T>
-matrix<T>& matrix<T>::operator =(const matrix<T>& mat) {
+Matrix<T>& Matrix<T>::operator =(const Matrix<T>& mat) {
     if (this != &mat){
         T* newData = new T[mat.rows * mat.cols];
         for (size_t i = 0; i < mat.rows * mat.cols; ++i)
@@ -72,7 +72,7 @@ matrix<T>& matrix<T>::operator =(const matrix<T>& mat) {
 }
 
 template<typename T>
-matrix<T>& matrix<T>::operator +=(const matrix<T>& mat) {
+Matrix<T>& Matrix<T>::operator +=(const Matrix<T>& mat) {
     checkSameSize(mat);
     for (size_t i = 0; i < rows * cols; ++i)
         data[i] += mat.data[i];
@@ -80,7 +80,7 @@ matrix<T>& matrix<T>::operator +=(const matrix<T>& mat) {
 }
 
 template<typename T>
-matrix<T>& matrix<T>::operator -=(const matrix<T>& mat) {
+Matrix<T>& Matrix<T>::operator -=(const Matrix<T>& mat) {
     checkSameSize(mat);
     for (size_t i = 0; i < rows * cols; ++i)
         data[i] -= mat.data[i];
@@ -88,25 +88,25 @@ matrix<T>& matrix<T>::operator -=(const matrix<T>& mat) {
 }
 
 template<typename _T>
-matrix<_T> operator +(const matrix<_T>& mat1, const matrix<_T>& mat2) {
-    matrix<_T> res(mat1);
+Matrix<_T> operator +(const Matrix<_T>& mat1, const Matrix<_T>& mat2) {
+    Matrix<_T> res(mat1);
     res += mat2;
     return res;
 }
 
 template<typename _T>
-matrix<_T> operator -(const matrix<_T>& mat1, const matrix<_T>& mat2) {
-    matrix<_T> res(mat1);
+Matrix<_T> operator -(const Matrix<_T>& mat1, const Matrix<_T>& mat2) {
+    Matrix<_T> res(mat1);
     res -= mat2;
     return res;
 }
 
 template<typename _T>
-matrix<_T> operator *(const matrix<_T>& mat1, const matrix<_T>& mat2) {
+Matrix<_T> operator *(const Matrix<_T>& mat1, const Matrix<_T>& mat2) {
     if (mat1.cols != mat2.rows)
         throw MatrixBaseException("Incorrect matrix sizes for multiplication");
 
-    matrix<_T> result(mat1.rows, mat2.cols);
+    Matrix<_T> result(mat1.rows, mat2.cols);
     for (size_t i = 0; i < mat1.rows; ++i) {
         for (size_t j = 0; j < mat2.cols; ++j) {
             _T sum = _T{};
@@ -119,41 +119,41 @@ matrix<_T> operator *(const matrix<_T>& mat1, const matrix<_T>& mat2) {
 }
 
 template<typename _T>
-matrix<_T> operator +(const matrix<_T>& mat, double num) {
-    matrix<_T> res(mat);
+Matrix<_T> operator +(const Matrix<_T>& mat, double num) {
+    Matrix<_T> res(mat);
     for (size_t i = 0; i < mat.rows * mat.cols; ++i)
         res.data[i] += static_cast<_T>(num);
     return res;
 }
 
 template<typename _T>
-matrix<_T> operator -(const matrix<_T>& mat, double num) {
-    matrix<_T> res(mat);
+Matrix<_T> operator -(const Matrix<_T>& mat, double num) {
+    Matrix<_T> res(mat);
     for (size_t i = 0; i < mat.rows * mat.cols; ++i)
         res.data[i] -= static_cast<_T>(num);
     return res;
 }
 
 template<typename _T>
-matrix<_T> operator /(const matrix<_T>& mat, double num) {
+Matrix<_T> operator /(const Matrix<_T>& mat, double num) {
     if (num == 0)
         throw MatrixBaseException("Division by zero");
-    matrix<_T> res(mat);
+    Matrix<_T> res(mat);
     for (size_t i = 0; i < mat.rows * mat.cols; ++i)
         res.data[i] /= static_cast<_T>(num);
     return res;
 }
 
 template<typename _T>
-matrix<_T> operator *(const matrix<_T>& mat, double num) {
-    matrix<_T> res(mat);
+Matrix<_T> operator *(const Matrix<_T>& mat, double num) {
+    Matrix<_T> res(mat);
     for (size_t i = 0; i < mat.rows * mat.cols; ++i)
         res.data[i] *= static_cast<_T>(num);
     return res;
 }
 
 template<typename _T>
-std::ostream& operator <<(std::ostream& os, const matrix<_T>& mat) {
+std::ostream& operator <<(std::ostream& os, const Matrix<_T>& mat) {
     for (size_t i = 0; i < mat.rows; ++i) {
         for (size_t j = 0; j < mat.cols; ++j)
             os << mat.data[mat.toIndex(i, j)] << ' ';
@@ -163,44 +163,44 @@ std::ostream& operator <<(std::ostream& os, const matrix<_T>& mat) {
 }
 
 template<typename T>
-void matrix<T>::set_elem(unsigned int i, unsigned int j, const T& elem) {
+void Matrix<T>::setElem(unsigned int i, unsigned int j, const T& elem) {
     data[toIndex(i, j)] = elem;
 }
 
 template<typename T>
-T& matrix<T>::get_elem(unsigned int i, unsigned int j) {
+T& Matrix<T>::getElem(unsigned int i, unsigned int j) {
     return data[toIndex(i, j)];
 }
 
 template<typename T>
-T& matrix<T>::operator ()(unsigned int i, unsigned int j) {
-    return get_elem(i, j);
+T& Matrix<T>::operator ()(unsigned int i, unsigned int j) {
+    return getElem(i, j);
 }
 
 template<typename T>
-bool matrix<T>::isSquare() {
+bool Matrix<T>::isSquare() {
     return rows == cols;
 }
 
 template<typename T>
-unsigned int matrix<T>::getCountRows() const{
+unsigned int Matrix<T>::getCountRows() const{
     return rows;
 }
 
 template<typename T>
-unsigned int matrix<T>::getCountCols() const{
+unsigned int Matrix<T>::getCountCols() const{
     return cols;
 }
 
 template<typename T>
-unsigned int matrix<T>::toIndex(unsigned int i, unsigned int j) const {
+unsigned int Matrix<T>::toIndex(unsigned int i, unsigned int j) const {
     if (i >= rows || j >= cols)
         throw MatrixBaseException("Matrix index out of range");
     return i * cols + j;
 }
 
 template<typename T>
-void matrix<T>::checkSameSize(const matrix<T> &other) const
+void Matrix<T>::checkSameSize(const Matrix<T> &other) const
 {
     if (rows != other.rows || cols != other.cols)
         throw MatrixBaseException("Matrix sizes don't match");
@@ -210,12 +210,12 @@ void matrix<T>::checkSameSize(const matrix<T> &other) const
 #include "iterator_impl.h"
 
 template<typename T>
-Iterator<T> matrix<T>::iteratorBegin() {
+Iterator<T> Matrix<T>::iteratorBegin() {
     return Iterator<T>(*this, 0);
 }
 
 template<typename T>
-Iterator<T> matrix<T>::iteratorEnd() {
+Iterator<T> Matrix<T>::iteratorEnd() {
     return Iterator<T>(*this, rows * cols);
 }
 

@@ -10,7 +10,7 @@ template<typename T>
 class Iterator;
 
 template <typename T>
-class matrix
+class Matrix
 {
 private:
     unsigned int rows;
@@ -18,48 +18,48 @@ private:
     T* data;
 
     unsigned int toIndex(unsigned int i, unsigned int j) const;
-    void checkSameSize(const matrix<T> &other) const;
+    void checkSameSize(const Matrix<T> &other) const;
 
     template<typename>
     friend class Iterator;
 
 public:
-    matrix(unsigned int n, unsigned int m);
-    matrix(const matrix<T>& mat);
-    matrix(matrix<T>&& mat) noexcept;
-    explicit matrix(std::initializer_list<std::initializer_list<T>> list);
-    ~matrix();
+    Matrix(unsigned int n, unsigned int m);
+    Matrix(const Matrix<T>& mat);
+    Matrix(Matrix<T>&& mat) noexcept;
+    explicit Matrix(std::initializer_list<std::initializer_list<T>> list);
+    ~Matrix();
 
-    matrix<T>& operator =(const matrix<T>& mat);
-    matrix<T>& operator +=(const matrix<T>& mat);
-    matrix<T>& operator -=(const matrix<T>& mat);
-
-    template <typename _T>
-    friend matrix<_T> operator +(const matrix<_T>& mat1, const matrix<_T>& mat2);
+    Matrix<T>& operator =(const Matrix<T>& mat);
+    Matrix<T>& operator +=(const Matrix<T>& mat);
+    Matrix<T>& operator -=(const Matrix<T>& mat);
 
     template <typename _T>
-    friend matrix<_T> operator -(const matrix<_T>& mat1, const matrix<_T>& mat2);
+    friend Matrix<_T> operator +(const Matrix<_T>& mat1, const Matrix<_T>& mat2);
 
     template <typename _T>
-    friend matrix<_T> operator *(const matrix<_T>& mat1, const matrix<_T>& mat2);
+    friend Matrix<_T> operator -(const Matrix<_T>& mat1, const Matrix<_T>& mat2);
 
     template <typename _T>
-    friend matrix<_T> operator +(const matrix<_T>& m1, double num);
+    friend Matrix<_T> operator *(const Matrix<_T>& mat1, const Matrix<_T>& mat2);
 
     template <typename _T>
-    friend matrix<_T> operator -(const matrix<_T>& m1, double num);
+    friend Matrix<_T> operator +(const Matrix<_T>& m1, double num);
 
     template <typename _T>
-    friend matrix<_T> operator /(const matrix<_T>& m1, double num);
+    friend Matrix<_T> operator -(const Matrix<_T>& m1, double num);
 
     template <typename _T>
-    friend matrix<_T> operator *(const matrix<_T>& m1, double num);
+    friend Matrix<_T> operator /(const Matrix<_T>& m1, double num);
+
+    template <typename _T>
+    friend Matrix<_T> operator *(const Matrix<_T>& m1, double num);
 
     template<typename _T>
-    friend std::ostream& operator <<(std::ostream& os, const matrix<_T>& mat);
+    friend std::ostream& operator <<(std::ostream& os, const Matrix<_T>& mat);
 
-    void set_elem(unsigned int i, unsigned int j,const T& elem);
-    T& get_elem(unsigned int i, unsigned int j);
+    void setElem(unsigned int i, unsigned int j,const T& elem);
+    T& getElem(unsigned int i, unsigned int j);
     T& operator ()(unsigned int i, unsigned int j);
     bool isSquare();
     unsigned int getCountRows() const;

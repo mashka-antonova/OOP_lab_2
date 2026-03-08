@@ -4,7 +4,7 @@
 #include "iterator.h"
 
 template<typename T>
-Iterator<T>::Iterator(matrix<T>& containerObj, unsigned int startIndex)
+Iterator<T>::Iterator(Matrix<T>& containerObj, unsigned int startIndex)
     : container(&containerObj), index(startIndex) {}
 
 template<typename T>
