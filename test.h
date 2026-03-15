@@ -1,7 +1,6 @@
 #ifndef MATRIX_TESTS_H
 #define MATRIX_TESTS_H
 
-#include <functional>
 #include <string>
 
 class MatrixTests

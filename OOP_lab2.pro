@@ -12,8 +12,6 @@ SOURCES += \
 HEADERS += \
     iterator.h \
     iterator_exception.h \
-    iterator_impl.h \
     matrix.h \
     matrix_base_exception.h \
-    matrix_impl.h \
     test.h

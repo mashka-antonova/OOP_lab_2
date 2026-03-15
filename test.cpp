@@ -186,5 +186,5 @@ int MatrixTests::runAll()
     runTest("exceptions", &MatrixTests::testExceptions);
 
     std::cout << "Passed: " << passedCount << ", Failed: " << failedCount << std::endl;
-    return failedCount == 0 ? 0 : 1;
+    return failedCount != 0;
 }
