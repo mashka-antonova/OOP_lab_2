@@ -25,12 +25,16 @@ private:
 
 public:
     Matrix(unsigned int n, unsigned int m);
+
     Matrix(const Matrix<T>& mat);
+    Matrix<T>& operator=(const Matrix<T>& mat);
+
     Matrix(Matrix<T>&& mat) noexcept;
+    Matrix<T>& operator=(Matrix<T>&& mat) noexcept;
+
     explicit Matrix(std::initializer_list<std::initializer_list<T>> list);
     ~Matrix();
 
-    Matrix<T>& operator =(const Matrix<T>& mat);
     Matrix<T>& operator +=(const Matrix<T>& mat);
     Matrix<T>& operator -=(const Matrix<T>& mat);
 
@@ -75,19 +79,47 @@ Matrix<T>::Matrix(unsigned int n, unsigned int m)
 
 template<typename T>
 Matrix<T>::Matrix(const Matrix<T>& mat)
-    : rows(mat.rows), cols(mat.cols), data(new T[rows * cols]{})
+    : rows(0), cols(0), data(nullptr)
 {
-    for (size_t i = 0; i < rows * cols; ++i)
-        data[i] = mat.data[i];
+    *this = mat;
+}
+
+template<typename T>
+Matrix<T>& Matrix<T>::operator=(const Matrix<T>& mat) {
+    if (this != &mat) {
+        T* newData = new T[mat.rows * mat.cols];
+        for (size_t i = 0; i < mat.rows * mat.cols; ++i)
+            newData[i] = mat.data[i];
+
+        delete[] data;
+        data = newData;
+        rows = mat.rows;
+        cols = mat.cols;
+    }
+    return *this;
 }
 
 template<typename T>
 Matrix<T>::Matrix(Matrix<T>&& mat) noexcept
-    : rows(mat.rows), cols(mat.cols), data(mat.data)
+    : rows(0), cols(0), data(nullptr)
 {
-    mat.rows = 0;
-    mat.cols = 0;
-    mat.data = nullptr;
+    *this = std::move(mat);
+}
+
+template<typename T>
+Matrix<T>& Matrix<T>::operator=(Matrix<T>&& mat) noexcept {
+    if (this != &mat) {
+        delete[] data;
+
+        rows = mat.rows;
+        cols = mat.cols;
+        data = mat.data;
+
+        mat.rows = 0;
+        mat.cols = 0;
+        mat.data = nullptr;
+    }
+    return *this;
 }
 
 template<typename T>
@@ -117,20 +149,6 @@ template<typename T>
 Matrix<T>::~Matrix()
 {
     delete[] data;
-}
-
-template<typename T>
-Matrix<T>& Matrix<T>::operator =(const Matrix<T>& mat) {
-    if (this != &mat) {
-        T* newData = new T[mat.rows * mat.cols];
-        for (size_t i = 0; i < mat.rows * mat.cols; ++i)
-            newData[i] = mat.data[i];
-        delete[] data;
-        data = newData;
-        rows = mat.rows;
-        cols = mat.cols;
-    }
-    return *this;
 }
 
 template<typename T>
